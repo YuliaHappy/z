@@ -1,6 +1,6 @@
-export { getTouhes, getTouchRadius };
+export { getTouches, getTouchRadius };
 
-function getTouhes(evt) {
+function getTouches(evt) {
 	if (evt.changedTouches && evt.changedTouches.length) {
 		return evt.changedTouches;
 	} else if (evt.clientX || evt.clientY) {

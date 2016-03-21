@@ -1,11 +1,13 @@
+import Force from "force";
 import Vector from "vector";
 
 const K = Symbol();
 const W = Symbol();
 const H = Symbol();
 
-export default class SoftBoxForce {
+export default class SoftBoxForce extends Force {
 	constructor(k = 10, w = 10, h = 10) {
+		super();
 		this[K] = k;
 		this[W] = w;
 		this[H] = h;
