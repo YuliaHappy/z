@@ -68,9 +68,13 @@
     "point-state": "./src/point-state.js",
     "points-system": "./src/points-system.js",
     "force": "./src/force.js",
+    "gravity-force": "./src/gravity-force.js",
+    "dissipative-force": "./src/dissipative-force.js",
     "soft-box-force": "./src/soft-box-force.js",
     "canvas-based-view": "./src/canvas-based-view/canvas-based-view.js",
     "vector": "./src/utils/vector.js",
     "request-animation-frame": "./src/utils/request-animation-frame.js",
-    "animate": "./src/utils/animate.js"  }
+    "animate": "./src/utils/animate.js",
+    "touch-utils": "./src/utils/touch-utils.js"
+  }
 }
