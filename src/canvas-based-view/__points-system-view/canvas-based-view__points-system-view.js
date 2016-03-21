@@ -1,5 +1,7 @@
 // TODO Refactor this draft decision
 
+import SpringForce from "spring-force";
+
 const CANVAS = Symbol();
 const POINTS_SYSTEM = Symbol();
 
@@ -26,6 +28,8 @@ export default class PointsSystemView {
 		let ctx = this.canvas.getContext("2d");
 		drawBackground.call(this, ctx);
 		this.pointsSystem.states.forEach(drawPoint.bind(this, ctx));
+		this.pointsSystem.forces.filter(force => force instanceof SpringForce)
+				.forEach(drawSpringForce.bind(this, ctx));
 	}
 }
 
@@ -49,4 +53,8 @@ function drawPoint(ctx, pointState) {
 	ctx.lineWidth = 2;
 	ctx.strokeStyle = "black";
 	ctx.stroke();
+}
+
+function drawSpringForce() {
+	// TODO
 }

@@ -1,5 +1,6 @@
 const FORCES = Symbol();
 const STATES = Symbol();
+const POINT_STATES_MAP = Symbol();
 
 export default class PointsSystem {
 	constructor(states = [], forces = []) {
@@ -8,10 +9,22 @@ export default class PointsSystem {
 		}
 		this[STATES] = states;
 		this[FORCES] = forces;
+		this[POINT_STATES_MAP] = new Map();
+		states.forEach(state => {
+			this[POINT_STATES_MAP].set(state.point, state);
+		});
 	}
 
 	get states() {
 		return this[STATES];
+	}
+
+	get forces() {
+		return this[FORCES];
+	}
+
+	getPointState(point) {
+		return this[POINT_STATES_MAP].get(point);
 	}
 
 	evolve(dt) {

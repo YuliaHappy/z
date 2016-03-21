@@ -4,15 +4,25 @@ import Point from "point";
 import PointState from "point-state";
 import PointsSystem from "points-system";
 import SoftBoxForce from "soft-box-force";
+import SpringForce from "spring-force";
+import Vector from "vector";
 
 import animate from "animate";
 
 import PointsSystemView from "./__points-system-view/canvas-based-view__points-system-view";
 
-let point = new Point();
-let pointState = new PointState(point);
+let pointA = new Point(),
+	pointB = new Point(),
+	pointC = new Point();
+let pointStateA = new PointState(pointA),
+	pointStateB = new PointState(pointB, new Vector(0, 100)),
+	pointStateC = new PointState(pointC, new Vector(100, 0));
 let softBoxForce = new SoftBoxForce();
-let pointsSystem = new PointsSystem([pointState], [softBoxForce]);
+let springAB = new SpringForce(pointA, pointB),
+	springBC = new SpringForce(pointB, pointC),
+	springCA = new SpringForce(pointC, pointA);
+let pointsSystem = new PointsSystem([pointStateA, pointStateB, pointStateC],
+		[softBoxForce, springAB, springBC, springCA]);
 let pointsSystemView = new PointsSystemView(
 		document.querySelector(".canvas-based-view__points-system-view"),
 		pointsSystem);
