@@ -1,18 +1,14 @@
 const FORCES = Symbol();
-const STATES = Symbol();
 const POINT_STATES_MAP = Symbol();
+const STATES = Symbol();
 
 export default class PointsSystem {
 	constructor(states = [], forces = []) {
 		if (!Array.isArray(states) || !Array.isArray(forces)) {
 			throw new Error("Invalid argument");
 		}
-		this[STATES] = states;
+		setStates.call(this, states);
 		this[FORCES] = forces;
-		this[POINT_STATES_MAP] = new Map();
-		states.forEach(state => {
-			this[POINT_STATES_MAP].set(state.point, state);
-		});
 	}
 
 	get states() {
@@ -30,7 +26,7 @@ export default class PointsSystem {
 	evolve(dt) {
 		let states = this[STATES];
 		let nextStates = states.map(pointState => evolvePointState.call(this, pointState, dt));
-		this[STATES] = nextStates;
+		setStates.call(this, nextStates);
 		return nextStates;
 	}
 }
@@ -45,6 +41,14 @@ function evolvePointState(pointState, dt) {
 }
 
 function computeForce(pointState) {
-	return this[FORCES].map(force => force.f(pointState))
+	return this[FORCES].map(force => force.f(pointState, this))
 			.reduce((sum, f) => sum.add(f), pointState.position.zero());
+}
+
+function setStates(nextStates) {
+	this[STATES] = nextStates;
+	this[POINT_STATES_MAP] = new Map();
+	nextStates.forEach(state => {
+		this[POINT_STATES_MAP].set(state.point, state);
+	});
 }

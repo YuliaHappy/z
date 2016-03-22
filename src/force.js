@@ -8,10 +8,12 @@ export default class Force {
 	/**
 	 * Compute force vector applied to point according to point's state
 	 * @param pointState current state of the point
+	 * @param pointsSystem optional parameter
 	 * @return force vector
 	 */
-	f(pointState) {
-		throw new Error(`Abstract f(${pointState})`);
+	f(pointState, pointsSystem) {
+		console.warn("Abstract method invoked with params:", pointState, pointsSystem);
+		throw new Error("Abstract");
 	}
 }
 

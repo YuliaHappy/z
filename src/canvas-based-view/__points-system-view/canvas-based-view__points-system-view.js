@@ -27,9 +27,9 @@ export default class PointsSystemView {
 	draw() {
 		let ctx = this.canvas.getContext("2d");
 		drawBackground.call(this, ctx);
-		this.pointsSystem.states.forEach(drawPoint.bind(this, ctx));
 		this.pointsSystem.forces.filter(force => force instanceof SpringForce)
 				.forEach(drawSpringForce.bind(this, ctx));
+		this.pointsSystem.states.forEach(drawPoint.bind(this, ctx));
 	}
 }
 
@@ -55,6 +55,14 @@ function drawPoint(ctx, pointState) {
 	ctx.stroke();
 }
 
-function drawSpringForce() {
-	// TODO
+function drawSpringForce(ctx, springForce) {
+	let pointStateA = this.pointsSystem.getPointState(springForce.pointA),
+		pointStateB = this.pointsSystem.getPointState(springForce.pointB);
+	ctx.beginPath();
+	ctx.moveTo(pointStateA.position.x(0), pointStateA.position.x(1));
+	ctx.lineTo(pointStateB.position.x(0), pointStateB.position.x(1));
+	ctx.closePath();
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "lightgray";
+	ctx.stroke();
 }

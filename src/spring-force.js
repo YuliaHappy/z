@@ -41,15 +41,20 @@ export default class SpringForce extends Force {
 		this[L] = length;
 	}
 
-	f(pointState) {
-		let dr;
+	f(pointState, pointsSystem) {
+		let pointStateA = pointsSystem.getPointState(this.pointA),
+			pointStateB = pointsSystem.getPointState(this.pointB);
 		if (this.pointA === pointState.point) {
-			dr = pointState.position.zero();
+			return computeForce.call(this, pointStateA, pointStateB);
 		} else if (this.pointB === pointState.point) {
-			dr = pointState.position.zero();
+			return computeForce.call(this, pointStateB, pointStateA);
 		} else {
-			dr = pointState.position.zero();
+			return pointState.position.zero();
 		}
-		return dr.mul(this.k);
 	}
+}
+
+function computeForce(pointStateA, pointStateB) {
+	let dr = pointStateB.position.sub(pointStateA.position);
+	return dr.mul(dr.length / this.length).sub(dr).mul(this.k);
 }
