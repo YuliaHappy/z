@@ -47,7 +47,10 @@ function computeForce(pointState) {
 
 function setStates(nextStates) {
 	this[STATES] = nextStates;
-	this[POINT_STATES_MAP] = new Map();
+	if (!this[POINT_STATES_MAP]) {
+		this[POINT_STATES_MAP] = new Map();
+	}
+	this[POINT_STATES_MAP].clear();
 	nextStates.forEach(state => {
 		this[POINT_STATES_MAP].set(state.point, state);
 	});
