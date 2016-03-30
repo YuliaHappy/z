@@ -6,7 +6,7 @@ const W = Symbol();
 const H = Symbol();
 
 export default class SoftBoxForce extends Force {
-	constructor(k = 10, w = 10, h = 10) {
+	constructor(k = 100, w = 10, h = 10) {
 		super();
 		this[K] = k;
 		this[W] = w;
@@ -35,8 +35,8 @@ export default class SoftBoxForce extends Force {
 	}
 
 	f(pointState) {
-		let lowerBounds = this.bounds.mul(0.1),
-			upperBounds = this.bounds.mul(0.9);
+		let lowerBounds = this.bounds.mul(0.01),
+			upperBounds = this.bounds.mul(0.99);
 		let dr = pointState.position.map(
 				(xi, i) => sigma(lowerBounds.x(i) - xi) - sigma(xi - upperBounds.x(i)));
 		return dr.mul(this.k);
