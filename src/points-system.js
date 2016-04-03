@@ -24,8 +24,8 @@ export default class PointsSystem {
 	}
 
 	evolve(dt) {
-		let states = this[STATES];
-		let nextStates = states.map(pointState => evolvePointState.call(this, pointState, dt));
+		let nextStates = this.states
+				.map(pointState => evolvePointState.call(this, pointState, dt));
 		setStates.call(this, nextStates);
 		return nextStates;
 	}

@@ -1,44 +1,68 @@
 // TODO Refactor this draft decision
 
-import Point from "point";
-import PointState from "point-state";
-import PointsSystem from "points-system";
-import SoftBoxForce from "soft-box-force";
 import SpringForce from "spring-force";
-import Vector from "vector";
 
-import animate from "animate";
+const CANVAS = Symbol();
+const POINTS_SYSTEM = Symbol();
 
-import PointsSystemView from "./__points-system-view/canvas-based-view__points-system-view";
+export default class CanvasBasedView {
+	constructor(canvas, pointsSystem) {
+		this[CANVAS] = canvas;
+		this[POINTS_SYSTEM] = pointsSystem;
+	}
 
-let pointA = new Point(),
-	pointB = new Point(),
-	pointC = new Point();
-let pointStateA = new PointState(pointA),
-	pointStateB = new PointState(pointB, new Vector(0, 100)),
-	pointStateC = new PointState(pointC, new Vector(100, 0));
-let softBoxForce = new SoftBoxForce();
-let springAB = new SpringForce(pointA, pointB),
-	springBC = new SpringForce(pointB, pointC),
-	springCA = new SpringForce(pointC, pointA);
-let pointsSystem = new PointsSystem([pointStateA, pointStateB, pointStateC],
-		[softBoxForce, springAB, springBC, springCA]);
-let pointsSystemView = new PointsSystemView(
-		document.querySelector(".canvas-based-view__points-system-view"),
-		pointsSystem);
+	get canvas() {
+		return this[CANVAS];
+	}
 
-animate(function (dt) {
-	pointsSystem.evolve(Math.min(0.1, dt));
-	pointsSystemView.draw();
-});
+	get pointsSystem() {
+		return this[POINTS_SYSTEM];
+	}
 
-window.addEventListener("resize", resizeView);
-window.addEventListener("orientationchange", resizeView);
-document.addEventListener("DOMContentLoaded", resizeView);
+	resize(w, h) {
+		this.canvas.width = w;
+		this.canvas.height = h;
+	}
 
-function resizeView() {
-	let w = window.innerWidth,
-		h = window.innerHeight;
-	pointsSystemView.resize(w, h);
-	softBoxForce.resize(w, h);
+	draw() {
+		let ctx = this.canvas.getContext("2d");
+		drawBackground.call(this, ctx);
+		this.pointsSystem.forces.filter(force => force instanceof SpringForce)
+				.forEach(drawSpringForce.bind(this, ctx));
+		this.pointsSystem.states.forEach(drawPoint.bind(this, ctx));
+	}
+}
+
+function drawBackground(ctx) {
+	ctx.fillStyle = "white";
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "black";
+	ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+	ctx.strokeRect(1, 1, this.canvas.width - 1, this.canvas.height - 1);
+}
+
+function drawPoint(ctx, pointState) {
+	let position = pointState.position;
+	let radius = Math.max(10, Math.min(this.canvas.width, this.canvas.height) / 100);
+	ctx.beginPath();
+	ctx.arc(position.x(0), position.x(1),
+			radius, 0, 2 * Math.PI, false);
+	ctx.closePath();
+	ctx.fillStyle = "lightgray";
+	ctx.fill();
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "black";
+	ctx.stroke();
+}
+
+function drawSpringForce(ctx, springForce) {
+	let pointStateA = this.pointsSystem.getPointState(springForce.pointA),
+		pointStateB = this.pointsSystem.getPointState(springForce.pointB);
+	ctx.beginPath();
+	ctx.moveTo(pointStateA.position.x(0), pointStateA.position.x(1));
+	ctx.lineTo(pointStateB.position.x(0), pointStateB.position.x(1));
+	ctx.closePath();
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "lightgray";
+	ctx.stroke();
 }
