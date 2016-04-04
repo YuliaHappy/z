@@ -1,6 +1,6 @@
 import Point from "point";
 import Vector from "vector";
-import _ from "lodash";
+import isNumber from "lodash/lang/isNumber";
 
 const POINT = Symbol();
 const POSITION = Symbol();
@@ -44,14 +44,14 @@ export default class PointState {
 	}
 
 	moveTo(r, dt) {
-		if (!(r instanceof Vector) || !_.isNumber(dt)) {
+		if (!(r instanceof Vector) || !isNumber(dt)) {
 			throw new Error("Invalid argument");
 		}
 		return next(this, r, dt);
 	}
 
 	moveBy(dr, dt) {
-		if (!(dr instanceof Vector) || !_.isNumber(dt)) {
+		if (!(dr instanceof Vector) || !isNumber(dt)) {
 			throw new Error("Invalid argument");
 		}
 		let r = this.position.add(dr);
@@ -63,7 +63,7 @@ export default class PointState {
  * Create new point state and link to the previous one
  */
 function next(prevState, position, dt) {
-	if (!(prevState instanceof PointState) || !(position instanceof Vector) || !_.isNumber(dt)) {
+	if (!(prevState instanceof PointState) || !(position instanceof Vector) || !isNumber(dt)) {
 		throw new Error("Invalid argument");
 	}
 	let result = new PointState(prevState.point, position);

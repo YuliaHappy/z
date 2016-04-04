@@ -23,6 +23,14 @@ export default class PointsSystem {
 		return this[POINT_STATES_MAP].get(point);
 	}
 
+	getClosestPointState(position) {
+		return this.states.reduce((closestPointState, pointState) => {
+			let bestDistance = closestPointState.position.sub(position).length,
+				distance = pointState.position.sub(position).length
+			return distance < bestDistance ? pointState : closestPointState;
+		});
+	}
+
 	evolve(dt) {
 		let nextStates = this.states
 				.map(pointState => evolvePointState.call(this, pointState, dt));

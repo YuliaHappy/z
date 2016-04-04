@@ -1,4 +1,10 @@
-export { getTouches, getTouchRadius };
+export { getTouch, getTouches, getTouchRadius };
+
+const TOUCH_SENSITIVITY = 3;
+
+function getTouch(evt) {
+	return getTouches(evt)[0];
+}
 
 function getTouches(evt) {
 	if (evt.changedTouches && evt.changedTouches.length) {
@@ -9,8 +15,6 @@ function getTouches(evt) {
 		return [];
 	}
 }
-
-const TOUCH_SENSITIVITY = 3;
 
 function getTouchRadius(touch, defaultR) {
 	if (touch && touch.radiusX) {

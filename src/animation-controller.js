@@ -4,9 +4,10 @@ const ANIMATABLES_LIST = Symbol();
 const STARTED = Symbol();
 
 export default class AnimationController {
-	constructor(animatables) {
-		this[ANIMATABLES_LIST] = animatables || [];
+	constructor() {
+		this[ANIMATABLES_LIST] = [];
 		this[STARTED] = false;
+		
 		animate(dt => {
 			if (this[STARTED]) {
 				this[ANIMATABLES_LIST].forEach(animatable => animatable(dt));

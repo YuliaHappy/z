@@ -10,6 +10,7 @@ import Vector from "vector";
 import CanvasBasedView from "canvas-based-view";
 import AnimationController from "animation-controller";
 import ResizingController from "resizing-controller";
+import PointTouchEventEmitter from "point-touch-event-emitter";
 
 let pointA = new Point(),
 	pointB = new Point(),
@@ -24,15 +25,22 @@ let springAB = new SpringForce(pointA, pointB),
 let pointsSystem = new PointsSystem([pointStateA, pointStateB, pointStateC],
 		[softBoxForce, springAB, springBC, springCA]);
 
-let canvasBasedView = new CanvasBasedView(
-		document.querySelector(".canvas-based-view"),
-		pointsSystem);
+let canvas = document.querySelector(".canvas-based-view"),
+	canvasBasedView = new CanvasBasedView(canvas, pointsSystem);
 
 let animationController = new AnimationController();
-animationController.register(dt => pointsSystem.evolve(Math.min(0.1, dt)));
-animationController.register(dt => canvasBasedView.draw());
+animationController.register(
+		dt => pointsSystem.evolve(Math.min(0.1, dt)),
+		canvasBasedView.draw.bind(canvasBasedView));
 animationController.start();
 
 let resizingController = new ResizingController();
-resizingController.register(canvasBasedView.resize.bind(canvasBasedView));
-resizingController.register(softBoxForce.resize.bind(softBoxForce));
+resizingController.register(
+		canvasBasedView.resize.bind(canvasBasedView),
+		softBoxForce.resize.bind(softBoxForce));
+
+let pointTouchEventEmitter = new PointTouchEventEmitter(pointsSystem, 10);
+pointTouchEventEmitter.bindTo(canvas);
+
+canvas.addEventListener("pointtouchstart", console.log.bind(console), true);
+canvas.addEventListener("pointtouchend", console.log.bind(console), true);

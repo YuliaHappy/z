@@ -1,8 +1,9 @@
 const RESIZABLES_LIST = Symbol();
 
 export default class ResizingController {
-	constructor(resizables) {
-		this[RESIZABLES_LIST] = resizables || [];
+	constructor() {
+		this[RESIZABLES_LIST] = [];
+		
 		window.addEventListener("resize", resize.bind(this));
 		window.addEventListener("orientationchange", resize.bind(this));
 		document.addEventListener("DOMContentLoaded", resize.bind(this));

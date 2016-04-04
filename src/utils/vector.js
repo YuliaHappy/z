@@ -1,4 +1,4 @@
-import _ from "lodash";
+import isNumber from "lodash/lang/isNumber";
 
 const COMPONENTS = Symbol();
 
@@ -49,7 +49,7 @@ export default class Vector {
 	}
 
 	mul(k) {
-		if (!_.isNumber(k)) {
+		if (!isNumber(k)) {
 			throw new Error("Invalid argument");
 		}
 		return this.map(xi => k * xi);
