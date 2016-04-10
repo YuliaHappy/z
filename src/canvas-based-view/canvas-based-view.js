@@ -1,4 +1,4 @@
-// TODO Refactor this draft decision
+// TODO Refactor view layer to meet better architecture. Use *MVC* pattern.
 
 import SpringForce from "spring-force";
 

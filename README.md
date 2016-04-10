@@ -30,10 +30,10 @@ A lot of points bouncing and moving around through fancy paths ;)
 ### Tasks
 
 0. Review already implemented modules to discover or repeat some ES6 basic theory.
-1. Implement *dissipative-force* and *gravity-force*.
-2. Implement points system *factory* (abstract factory pattern) to generate systems with different "configurations" (wheel, bridge, house, or any physical object you want).
-3. Refactor *TODO-s* to meet better architecture. Try to use *BEM* methodology and *MVC* pattern.
-4. Implement *touch-based-controller* to move points by tapping and dragging them. Use *point-touch-event-emitter* module.
+1. Implement *DissipativeForce* and *GravityForce*. Add them to the "scene".
+2. Implement *PointsSystemFactory* (abstract factory pattern) to generate systems with different "configurations" (wheel, bridge, house, or any physical object you want).
+3. Refactor view layer to meet better architecture. Use *MVC* pattern.
+4. Implement *TouchBasedController* to move points by tapping and dragging them. Use *PointTouchEventEmitter* module.
 
 Additional:
 

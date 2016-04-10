@@ -1,6 +1,5 @@
 /**
- * TODO GravityForce = m*g
- * g = 9.8 m/s^2
+ * TODO Implement GravityForce = m*g
  */
 export default class GravityForce {
 }

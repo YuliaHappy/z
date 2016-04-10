@@ -1,4 +1,7 @@
-// TODO Refactor this draft decision
+/**
+ * TODO Implement PointsSystemFactory (abstract factory pattern) to generate systems
+ * with different "configurations" (wheel, bridge, house, or any physical object you want)
+ */
 
 import Point from "point";
 import PointState from "point-state";
