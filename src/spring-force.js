@@ -44,6 +44,7 @@ export default class SpringForce extends Force {
 	f(pointState, pointsSystem) {
 		let pointStateA = pointsSystem.getPointState(this.pointA),
 			pointStateB = pointsSystem.getPointState(this.pointB);
+			console.log(pointStateA + " ---- " + pointStateB);
 		if (this.pointA === pointState.point) {
 			return computeForce.call(this, pointStateA, pointStateB);
 		} else if (this.pointB === pointState.point) {

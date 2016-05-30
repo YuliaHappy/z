@@ -8,6 +8,8 @@ import PointState from "point-state";
 import PointsSystem from "points-system";
 import SoftBoxForce from "soft-box-force";
 import SpringForce from "spring-force";
+import DissipativeForce from "dissipative-force";
+import GravityForce from "gravity-force";
 import Vector from "vector";
 
 import CanvasBasedView from "canvas-based-view";
@@ -25,8 +27,10 @@ let softBoxForce = new SoftBoxForce();
 let springAB = new SpringForce(pointA, pointB),
 	springBC = new SpringForce(pointB, pointC),
 	springCA = new SpringForce(pointC, pointA);
+let dissipative = new DissipativeForce();
+let gravity = new GravityForce();
 let pointsSystem = new PointsSystem([pointStateA, pointStateB, pointStateC],
-		[softBoxForce, springAB, springBC, springCA]);
+		[softBoxForce, springAB, springBC, springCA, dissipative, gravity]);
 
 let canvas = document.querySelector(".canvas-based-view"),
 	canvasBasedView = new CanvasBasedView(canvas, pointsSystem);

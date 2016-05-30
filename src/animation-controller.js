@@ -7,7 +7,6 @@ export default class AnimationController {
 	constructor() {
 		this[ANIMATABLES_LIST] = [];
 		this[STARTED] = false;
-		
 		animate(dt => {
 			if (this[STARTED]) {
 				this[ANIMATABLES_LIST].forEach(animatable => animatable(dt));
