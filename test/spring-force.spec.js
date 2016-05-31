@@ -1,9 +1,6 @@
 import Force from "force";
 import SpringForce from "spring-force";
-// import Vector from "vector";
 import Point from "point";
-// import PointState from "point-state";
-// import PointsSystem from "points-system";
 
 chai.config.includeStack = true;
 
