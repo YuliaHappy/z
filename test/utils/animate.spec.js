@@ -5,15 +5,9 @@ import PointsSystem from "points-system";
 import GravityForce from "gravity-force";
 
 chai.config.includeStack = true;
-// let expect = chai.expect;
-
-// let sinon = require("sinon");
-// let sinonChai = require("sinon-chai");
-// chai.use(sinonChai);
 
 describe("Function animate", function () {
 	it("should call the callback function", function (done) {
-		// let callback = sinon.spy();
 
 		let pointA = new Point();
 		let pointStateA = new PointState(pointA);
