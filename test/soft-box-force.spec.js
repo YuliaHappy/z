@@ -10,21 +10,25 @@ let expect = chai.expect;
 
 describe("SoftBoxForce", function () {
 	let softBoxForce;
+	let f;
 
 	beforeEach(function () {
 		softBoxForce = new SoftBoxForce();
+		let mass = 10;
+		let point = new Point(mass);
+		let state = new PointState(point, new Vector(0, 0)).moveBy(new Vector(5, -5), 1);
+		f = softBoxForce.f(state);
 	});
 
 	it("should be a Force", function () {
 		expect(softBoxForce).to.be.an.instanceof(Force);
 	});
 
-	it("should have opposite to point's velocity direction", function () {
-		let mass = 10;
-		let point = new Point(mass);
-		let state = new PointState(point, new Vector(0, 0)).moveBy(new Vector(10, -10), 1);
-		let f = softBoxForce.f(state);
-		expect(f.x(0)).to.be.below(0);
+	it("should converted from positive coordinate to 0", function () {
+		expect(f.x(0)).to.equal(0);
+	});
+
+	it("should converted from negative coordinate to positive", function () {
 		expect(f.x(1)).to.be.above(0);
 	});
 });
