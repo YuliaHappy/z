@@ -24,6 +24,5 @@ describe("Function animate", function () {
 			dt => pointsSystem.evolve(Math.min(0.5, dt))
 		];
 		animate(dt => animatablesList.forEach(animatable => animatable(dt)), done());
-		// expect(callback).to.have.been.calledOnce();
 	});
 });
