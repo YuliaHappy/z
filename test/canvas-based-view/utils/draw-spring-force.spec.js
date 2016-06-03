@@ -22,7 +22,7 @@ describe("Function drawSpringForce", function () {
 		mock.restore();
 	});
 
-	it("function should draw spring force", function () {
+	it("should draw spring force", function () {
 		let pointA = new Point(),
 			pointB = new Point(10);
 		let springForce = new SpringForce(pointA, pointB);
@@ -34,7 +34,6 @@ describe("Function drawSpringForce", function () {
 			[springForce]
 		);
 		mock.expects("lineTo")
-			.withArgs(0, 50)
 			.once();
 		drawSpringForce(canvasContext, pointsSystem, springForce);
 		mock.verify();

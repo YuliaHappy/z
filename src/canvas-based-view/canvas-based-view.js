@@ -29,7 +29,7 @@ export default class CanvasBasedView {
 
 	draw() {
 		let ctx = this.canvas.getContext("2d");
-		drawBackground.call(this, this.canvas, ctx);
+		drawBackground(this.canvas, ctx);
 		this.pointsSystem.forces.filter(force => force instanceof SpringForce)
 				.forEach(drawSpringForce.bind(this, ctx, this.pointsSystem));
 		this.pointsSystem.states.forEach(drawPoint.bind(this, this.canvas, ctx));

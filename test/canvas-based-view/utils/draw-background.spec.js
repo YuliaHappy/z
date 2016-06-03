@@ -18,9 +18,8 @@ describe("Function drawBackground", function () {
 		mock.restore();
 	});
 
-	it("function should draw background", function () {
+	it("should draw background", function () {
 		mock.expects("strokeRect")
-			.withArgs(1, 1, canvas.width - 1, canvas.height - 1)
 			.once();
 		drawBackground(canvas, canvasContext);
 		mock.verify();
