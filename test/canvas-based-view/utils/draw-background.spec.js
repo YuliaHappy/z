@@ -1,28 +1,28 @@
 import drawBackground from "draw-background";
+import sinon from "sinon";
 
 chai.config.includeStack = true;
-let sinon = require("sinon");
 
 describe("Function drawBackground", function () {
 	let mock;
-	let obj;
+	let canvas;
+	let canvasContext;
 
 	beforeEach(function () {
-		obj = {
-			canvas: document.createElement("canvas"),
-			drawBckgr: drawBackground
-		};
-		mock = sinon.mock(obj);
+		canvas = document.createElement("canvas");
+		canvasContext = canvas.getContext("2d");
+		mock = sinon.mock(canvasContext);
 	});
 
 	afterEach(function () {
 		mock.restore();
 	});
 
-	it("should be called once", function () {
-		let canvas = obj.canvas.getContext("2d");
-		mock.expects("drawBckgr").withArgs(canvas).once();
-		obj.drawBckgr(canvas);
+	it("function should draw background", function () {
+		mock.expects("strokeRect")
+			.withArgs(1, 1, canvas.width - 1, canvas.height - 1)
+			.once();
+		drawBackground(canvas, canvasContext);
 		mock.verify();
 	});
 });

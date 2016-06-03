@@ -2,32 +2,34 @@ import drawPoint from "draw-point";
 import Point from "point";
 import PointState from "point-state";
 import Vector from "vector";
+import sinon from "sinon";
 
 chai.config.includeStack = true;
-let sinon = require("sinon");
 
 describe("Function drawPoint", function () {
 	let mock;
-	let obj;
+	let canvas;
+	let canvasContext;
 
 	beforeEach(function () {
-		obj = {
-			canvas: document.createElement("canvas"),
-			drawP: drawPoint
-		};
-		mock = sinon.mock(obj);
+		canvas = document.createElement("canvas");
+		canvasContext = canvas.getContext("2d");
+		mock = sinon.mock(canvasContext);
 	});
 
 	afterEach(function () {
 		mock.restore();
 	});
 
-	it("should be called once", function () {
-		let canvas = obj.canvas.getContext("2d");
+	it("function should draw point", function () {
 		let state = new PointState(new Point(10),
-			new Vector(0, 0)).moveBy(new Vector(5, -5), 1);
-		mock.expects("drawP").withArgs(canvas, state).once();
-		obj.drawP(canvas, state);
+			new Vector(10, 15), 1);
+		let radius = Math.max(10,
+			Math.min(canvas.width, canvas.height) / 100);
+		mock.expects("arc")
+			.withArgs(10, 15, radius, 0, 2 * Math.PI, false)
+			.once();
+		drawPoint(canvas, canvasContext, state);
 		mock.verify();
 	});
 });

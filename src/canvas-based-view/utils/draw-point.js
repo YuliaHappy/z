@@ -1,6 +1,6 @@
-export default function drawPoint(ctx, pointState) {
+export default function drawPoint(canvas, ctx, pointState) {
 	let position = pointState.position;
-	let radius = Math.max(10, Math.min(this.canvas.width, this.canvas.height) / 100);
+	let radius = Math.max(10, Math.min(canvas.width, canvas.height) / 100);
 	ctx.beginPath();
 	ctx.arc(position.x(0), position.x(1),
 			radius, 0, 2 * Math.PI, false);

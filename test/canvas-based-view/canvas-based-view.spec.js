@@ -1,28 +1,29 @@
-import drawSpringForce from "draw-spring-force";
-import SpringForce from "spring-force";
-import PointsSystem from "points-system";
+import CanvasBasedView from "canvas-based-view";
 import Vector from "vector";
-import PointState from "point-state";
 import Point from "point";
+import PointState from "point-state";
+import PointsSystem from "points-system";
+import SpringForce from "spring-force";
 import sinon from "sinon";
 
 chai.config.includeStack = true;
 
-describe("Function drawSpringForce", function () {
+describe("CanvasBasedView", function () {
 	let mock;
+	let canvas;
 	let canvasContext;
 
 	beforeEach(function () {
-		let canvas = document.createElement("canvas");
+		canvas = document.createElement("canvas");
 		canvasContext = canvas.getContext("2d");
 		mock = sinon.mock(canvasContext);
 	});
 
 	afterEach(function () {
 		mock.restore();
-	});
+	})
 
-	it("function should draw spring force", function () {
+	it("CanvasBasedView should draw ", function () {
 		let pointA = new Point(),
 			pointB = new Point(10);
 		let springForce = new SpringForce(pointA, pointB);
@@ -33,10 +34,11 @@ describe("Function drawSpringForce", function () {
 			],
 			[springForce]
 		);
-		mock.expects("lineTo")
-			.withArgs(0, 50)
-			.once();
-		drawSpringForce(canvasContext, pointsSystem, springForce);
+		let canvasBasedView = new CanvasBasedView(canvas, pointsSystem);
+		mock.expects("strokeRect").once();
+		mock.expects("arc").twice();
+		mock.expects("lineTo").once();
+		canvasBasedView.draw();
 		mock.verify();
 	});
 });
